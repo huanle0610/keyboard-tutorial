@@ -65,15 +65,13 @@ const KEYBOARD = [
           finger: "9",
         },
         {
-          main: { key: "print", code: "F12" },
+          main: { key: "print", code: "" },
           width: "47",
-
           finger: "9",
         },
         {
           main: { key: "scroll", code: "ScrollLock" },
           width: "47",
-
           finger: "10",
           toupper: 1,
         },

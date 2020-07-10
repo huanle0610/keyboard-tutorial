@@ -2,8 +2,9 @@
   "name": "keyboard-tutorial",
   "version": "1.0.0",
   "description": "",
-  "keywords": [],
+  "keywords": ["OpenRA"],
   "main": "src/index.js",
+  "homepage": "./",
   "dependencies": {
     "@blueprintjs/core": "3.29.0",
     "react": "16.12.0",
