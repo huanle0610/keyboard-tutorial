@@ -42,6 +42,13 @@ export default function CommonTips() {
         </tr>
         <tr>
           <td>
+            <KeyCombo combo="⊞+d" />
+          </td>
+          <td>-</td>
+          <td>显示桌面</td>
+        </tr>
+        <tr>
+          <td>
             <KeyCombo combo="ESC" />
           </td>
           <td>-</td>
