@@ -2,7 +2,7 @@ import React from "react";
 import { qwerty } from "./helpers/keyboard-data";
 import styled, { ThemeProvider } from "styled-components";
 import { useKeyboard } from "./context";
-import { Position, Tooltip } from "@blueprintjs/core";
+import SliderUpOut from "./sliderUpOut";
 
 const StyledKeyboardWrapper = styled.div`
   padding: 10px 10px 5px;
@@ -12,10 +12,9 @@ const StyledKeyboardWrapper = styled.div`
 
 const StyledKeyboard = styled.div`
   border-radius: 5px;
-  background: ${props => props.theme.mainBg};
-  width: 770px;
+  background: ${(props) => props.theme.mainBg};
   padding: 5px;
-  zoom: ${props => props.zoom};
+  zoom: ${(props) => props.zoom};
 `;
 
 const StyledKeyRow = styled.div`
@@ -27,9 +26,10 @@ const StyledKeyRow = styled.div`
 `;
 
 const StyledKey = styled.div`
+  position: relative;
   white-space: nowrap;
-  width: ${props => (props.width ? `${props.width}px` : "50px")};
-  text-align: ${props => props.textAlign};
+  min-width: ${(props) => (props.width ? `${props.width}px` : "50px")};
+  text-align: ${(props) => props.textAlign};
   height: 40px;
   line-height: 40px;
   background: #f6f7f8;
@@ -53,6 +53,13 @@ const StyledKey = styled.div`
     color: white;
     text-shadow: 0 1px 0 #205f8c;
   }
+  &.active.playing {
+      background-image: url("./media/speaker.svg");
+        background-repeat: no-repeat;
+            background-size: 10px 10px;
+        background-position: right 2px;
+}
+  }
   &:hover {
     transition: background 0.2s, border 0.2s, box-shadow 0.2s, text-shadow 0.2s,
       color 0.2s;
@@ -65,30 +72,29 @@ const StyledKey = styled.div`
   }
 `;
 
-const isAlphabet = str =>
+const isAlphabet = (str) =>
   str.length === 1 && "abcdefghijklmnopqrstuvwxyz".includes(str);
 
 function Key(props) {
-  const { currentKey, lowerCase } = useKeyboard();
-  const { main, width, left, right } = props.keyData;
+  const { currentKey, lowerCase, isPlaying } = useKeyboard();
+  const { main, width, left, right, marginRight, pinyin, tips } = props.keyData;
 
-  const currentLocation =
-    currentKey.location === 1
-      ? "left"
-      : currentKey.location === 2
-      ? "right"
-      : "";
   const textAlign = left ? "left" : right ? "right" : "center";
   const active = main.code === currentKey.keyCode;
   const showedKey =
     isAlphabet(main.key) && !lowerCase ? main.key.toUpperCase() : main.key;
   return (
     <StyledKey
-      className={active ? "active" : ""}
+      className={`${active ? "active" : ""} ${isPlaying ? "playing" : ""}`}
+      title={tips}
       width={width}
+      style={{ marginRight: marginRight ? marginRight : 0 }}
       textAlign={textAlign}
     >
-      {showedKey}
+      <span>
+        {showedKey}{" "}
+        {active && (pinyin || tips) && <SliderUpOut text={pinyin || tips} />}
+      </span>
     </StyledKey>
   );
 }
@@ -105,7 +111,7 @@ function KeyRow(props) {
 
 export default function Keyboard() {
   const theme = {
-    mainBg: "#333"
+    mainBg: "#333",
   };
   const { zoom } = useKeyboard();
 

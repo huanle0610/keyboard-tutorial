@@ -8,14 +8,26 @@
     "@blueprintjs/core": "3.29.0",
     "react": "16.12.0",
     "react-dom": "16.12.0",
+    "react-request-fullscreen": "^1.1.2",
     "react-scripts": "3.0.1",
+    "react-spring": "^8.0.27",
     "styled-components": "5.1.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.0.1",
+    "@commitlint/config-angular": "^9.0.1",
+    "@commitlint/prompt": "^9.0.1",
+    "@commitlint/prompt-cli": "^9.0.1",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
     "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
+    "lint": "eslint --format './node_modules/eslint-friendly-formatter' --fix --ext js,ts,tsx src",
+    "commitmsg": "npx commitlint -e $GIT_PARAMS",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

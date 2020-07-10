@@ -1,26 +1,40 @@
-import React, { useState } from "react";
-import { Tab, Tabs, Hotkeys, Hotkey, KeyCombo } from "@blueprintjs/core";
+import React from "react";
+import { Tab, Tabs } from "@blueprintjs/core";
 import CommonTips from "./CommonTips";
 import OpenRATips from "./OpenRATips";
+import styled from "styled-components";
+import useStickyState from "../hooks/useStickyState";
+
+const StyledTabs = styled(Tabs)`
+  overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+`;
 
 export default function Tips() {
-  const [selected, setSelected] = useState("common");
+  const [selected, setSelected] = useStickyState("common", "defaultTipsType");
 
-  const handleTabChange = v => {
+  const handleTabChange = (v) => {
     setSelected(v);
   };
 
   return (
-    <Tabs id="TabsExample" onChange={handleTabChange} selectedTabId={selected}>
-      <Tab id="common" title="通用" panel={<CommonTips />} />
+    <StyledTabs onChange={handleTabChange} selectedTabId={selected}>
+      <Tab
+        id="common"
+        title="通用"
+        panel={<CommonTips />}
+        className={"overAutoTab"}
+      />
       <Tab
         id="openra"
         title="OpenRA"
         panel={<OpenRATips />}
-        panelClassName="ember-panel"
+        className={"overAutoTab"}
       />
 
       <Tabs.Expander />
-    </Tabs>
+    </StyledTabs>
   );
 }

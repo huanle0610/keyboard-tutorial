@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useKeyboard } from "./context";
 
 const numberMapper = {
-  Meta: "windows",
+  Meta: ["meta", "windows"],
   " ": "space",
   "=": "equal",
   "-": "minus",
@@ -15,6 +15,10 @@ const numberMapper = {
   "`": "backquote",
   ",": "comma",
   ".": "period",
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  ArrowUp: "up",
+  ArrowDown: "down",
   1: "one",
   2: "two",
   3: "three",
@@ -24,22 +28,40 @@ const numberMapper = {
   7: "seven",
   8: "eight",
   9: "nine",
-  0: "zero"
+  0: "zero",
 };
+const randomItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 function BindKeys() {
-  const { setPlayQueue, setCurrentKey } = useKeyboard();
+  const { setPlayQueue, setCurrentKey, isPlaying } = useKeyboard();
   useEffect(() => {
-    const handler = e => {
+    const handler = (e) => {
+      if (isPlaying) {
+        return;
+      }
       e.preventDefault();
-      const { key, code: keyCode, location } = e;
-      console.log(`[${key}], [${keyCode}], [${location}]`);
-      const soundQueueItem = numberMapper[key] || key.toLowerCase();
+      const {
+        key,
+        code: keyCode,
+        location,
+        ctrlKey,
+        altKey,
+        shiftKey,
+        metaKey,
+      } = e;
+      console.log(
+        e,
+        `[${key}], [${keyCode}], [${location}], ctrl:[${ctrlKey}], alt:[${altKey}], shift:[${shiftKey}], meta:[${metaKey}]`
+      );
+      const soundQueueItem =
+        (Array.isArray(numberMapper[key])
+          ? randomItem(numberMapper[key])
+          : numberMapper[key]) || key.toLowerCase();
       setPlayQueue([soundQueueItem]);
       setCurrentKey({
         key,
         keyCode,
-        location
+        location,
       });
     };
     document.body.addEventListener("keydown", handler);
@@ -47,8 +69,9 @@ function BindKeys() {
     return () => {
       document.body.removeEventListener("keydown", handler);
     };
-  }, []);
+  }, [isPlaying, setCurrentKey, setPlayQueue]);
 
-  return <></>;
+  return null;
 }
+
 export default BindKeys;
