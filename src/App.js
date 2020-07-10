@@ -49,7 +49,7 @@ function App() {
       <BindKeys />
       <Keyboard />
       <SwitchTools />
-      {/* <Tips /> */}
+      <Tips />
       <center>{showImg && <img src="media/keyboard.jpg" />}</center>
     </div>
   );
