@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Tab, Tabs } from "@blueprintjs/core";
+import { Tab, Tabs, Hotkeys, Hotkey, KeyCombo } from "@blueprintjs/core";
 import CommonTips from "./CommonTips";
+import OpenRATips from "./OpenRATips";
 
 export default function Tips() {
   const [selected, setSelected] = useState("common");
@@ -15,7 +16,7 @@ export default function Tips() {
       <Tab
         id="openra"
         title="OpenRA"
-        panel={<div>abc</div>}
+        panel={<OpenRATips />}
         panelClassName="ember-panel"
       />
 
