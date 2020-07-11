@@ -1,2 +1,8 @@
 # keyboard-tutorial
-Created with CodeSandbox
+keyboard tutorial for beginners
+
+
+## TODOs
+
+- support key combination
+- add quiz mode
